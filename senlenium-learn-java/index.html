@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Selenium Learning App</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 2rem; }
+      label, input, button { display: block; margin: 0.5rem 0; }
+      #greeting { margin-top: 1rem; font-weight: bold; color: #2a7; }
+    </style>
+  </head>
+  <body>
+    <h1>Selenium Learning App</h1>
+
+    <form id="greet-form">
+      <label for="name">Enter your name</label>
+      <input id="name" name="name" type="text" placeholder="Your name" />
+      <button id="greet" type="submit">Greet me</button>
+    </form>
+
+    <p id="greeting" aria-live="polite" style="display: none;"></p>
+
+    <script>
+      document.getElementById('greet-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var name = document.getElementById('name').value.trim();
+        var greetingEl = document.getElementById('greeting');
+
+        // Simulate an async operation (AJAX) with a small delay to teach waits
+        greetingEl.style.display = 'none';
+        greetingEl.textContent = '';
+
+        setTimeout(function () {
+          if (name) {
+            greetingEl.textContent = 'Hello, ' + name + '!';
+          } else {
+            greetingEl.textContent = "Hello, stranger!";
+          }
+          greetingEl.style.display = 'block';
+        }, 600); // 600ms delay to force explicit wait usage in tests
+      });
+    </script>
+  </body>
+</html>
