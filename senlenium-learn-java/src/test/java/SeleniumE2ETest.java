@@ -8,6 +8,8 @@ import org.openqa.selenium.support.ui.*;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 
+import com.example.seleniumlearn.SeleniumLearnApplication;
+
 import java.time.Duration;
 
 @SpringBootTest(classes = SeleniumLearnApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
