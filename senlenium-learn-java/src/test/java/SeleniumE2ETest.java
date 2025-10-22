@@ -6,7 +6,6 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.*;
 import org.openqa.selenium.support.ui.*;
 import org.springframework.boot.test.context.SpringBootTest;
-import com.example.seleniumlearn.SeleniumLearnApplication;
 import org.springframework.boot.test.web.server.LocalServerPort;
 
 import java.time.Duration;
