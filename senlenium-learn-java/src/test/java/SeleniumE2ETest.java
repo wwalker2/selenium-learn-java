@@ -1,16 +1,24 @@
 
+import java.time.Duration;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.jupiter.api.*;
-import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.*;
-import org.openqa.selenium.support.ui.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 
 import com.example.seleniumlearn.SeleniumLearnApplication;
 
-import java.time.Duration;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 @SpringBootTest(classes = SeleniumLearnApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -73,7 +81,7 @@ public class SeleniumE2ETest {
         nameInput.sendKeys("Alice");
         button.click();
 
-        WebElement greeting = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("greeting")));
+        WebElement greeting = wait.until(org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated(By.id("greeting")));
         Assertions.assertEquals("Hello, Alice!", greeting.getText());
     }
 
@@ -88,7 +96,7 @@ public class SeleniumE2ETest {
         nameInput.clear();
         button.click();
 
-        WebElement greeting = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("greeting")));
+        WebElement greeting = wait.until(org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated(By.id("greeting")));
         Assertions.assertEquals("Hello, stranger!", greeting.getText());
     }
 }
