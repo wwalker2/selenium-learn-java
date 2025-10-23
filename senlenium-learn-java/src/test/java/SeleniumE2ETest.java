@@ -38,7 +38,7 @@ public class SeleniumE2ETest {
     @BeforeEach
     void setup() {
         ChromeOptions options = new ChromeOptions();
-        String headless = System.getenv().getOrDefault("HEADLESS", "0");
+        String headless = System.getenv().getOrDefault("HEADLESS", "1");
         if (!"0".equals(headless)) {
             // newer headless flag recommended; fallback will work on older versions
             options.addArguments("--headless=new");
