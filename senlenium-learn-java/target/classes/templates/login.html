@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Login - Selenium Learning App</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 2rem; }
+      label, input, button { display: block; margin: 0.5rem 0; }
+      #login-message { margin-top: 1rem; font-weight: bold; }
+      .success { color: #2a7; }
+      .error { color: #d22; }
+    </style>
+  </head>
+  <body>
+    <h1>Login</h1>
+
+    <form id="login-form">
+      <label for="username">Username</label>
+      <input id="username" name="username" type="text" placeholder="Username" />
+
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" placeholder="Password" />
+
+      <button id="login" type="submit">Log in</button>
+    </form>
+
+    <p id="login-message" aria-live="polite" style="display: none;"></p>
+
+    <script>
+      // Simple client-side "auth" to demonstrate waits in tests.
+      document.getElementById('login-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var username = document.getElementById('username').value.trim();
+        var password = document.getElementById('password').value.trim();
+        var msg = document.getElementById('login-message');
+
+        msg.style.display = 'none';
+        msg.textContent = '';
+
+        // Simulate an async login delay so tests must wait explicitly
+        setTimeout(function () {
+          if (username && password) {
+            msg.textContent = 'Welcome, ' + username + '!';
+            msg.className = 'success';
+          } else {
+            msg.textContent = 'Invalid credentials';
+            msg.className = 'error';
+          }
+          msg.style.display = 'block';
+        }, 700);
+      });
+    </script>
+  </body>
+</html>
