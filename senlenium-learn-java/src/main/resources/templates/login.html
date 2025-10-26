@@ -27,7 +27,7 @@
     <p id="login-message" aria-live="polite" style="display: none;"></p>
 
     <script>
-      // Simple client-side "auth" to demonstrate waits in tests.
+      // Client-side code now defers to the server for authentication.
       document.getElementById('login-form').addEventListener('submit', function (e) {
         e.preventDefault();
         var username = document.getElementById('username').value.trim();
@@ -37,17 +37,26 @@
         msg.style.display = 'none';
         msg.textContent = '';
 
-        // Simulate an async login delay so tests must wait explicitly
-        setTimeout(function () {
-          if (username && password) {
-            msg.textContent = 'Welcome, ' + username + '!';
-            msg.className = 'success';
-          } else {
-            msg.textContent = 'Invalid credentials';
-            msg.className = 'error';
-          }
+        // Call server POST /login with JSON payload. Server will validate credentials.
+        fetch('/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: username, password: password })
+        })
+        .then(function (res) {
+          if (!res.ok) throw new Error('Network response was not ok');
+          return res.json();
+        })
+        .then(function (data) {
+          msg.textContent = data.message || '';
+          msg.className = data.success ? 'success' : 'error';
           msg.style.display = 'block';
-        }, 700);
+        })
+        .catch(function (err) {
+          msg.textContent = 'Error communicating with server';
+          msg.className = 'error';
+          msg.style.display = 'block';
+        });
       });
     </script>
   </body>
