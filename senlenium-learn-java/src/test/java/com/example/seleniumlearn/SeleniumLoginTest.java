@@ -93,4 +93,26 @@ public class SeleniumLoginTest {
         WebElement msg = wait.until(org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated(By.id("login-message")));
         Assertions.assertTrue(msg.getText().contains("Welcome, testuser"));
     }
+
+    @Test
+    void testFailedLoginShowsError() {
+        driver.get(baseUrl() + "login");
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+
+        wait.until(org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated(By.id("username")));
+        WebElement username = driver.findElement(By.id("username"));
+        WebElement password = driver.findElement(By.id("password"));
+        WebElement loginBtn = driver.findElement(By.id("login"));
+
+        username.clear();
+        password.clear();
+        username.sendKeys("wronguser");
+        password.sendKeys("wrongpass");
+        loginBtn.click();
+
+        // login.html shows the message after a short timeout; wait for it
+        WebElement msg = wait.until(org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated(By.id("login-message")));
+        Assertions.assertTrue(msg.getText().contains("Invalid credentials"));
+
+}
 }
