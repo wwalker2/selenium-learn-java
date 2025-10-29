@@ -1,5 +1,7 @@
 package com.example.seleniumlearn;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.time.Duration;
 
 import org.junit.jupiter.api.AfterEach;
@@ -115,4 +117,28 @@ public class SeleniumLoginTest {
         Assertions.assertTrue(msg.getText().contains("Invalid credentials"));
 
 }
+
+    @Test
+    void testEmptyCredentialsError(){
+        //Get driver to go to webpage.
+        driver.get(baseUrl() + "login");
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+
+        //Find necessary fields on the webpage
+        wait.until(org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated(By.id("username")));
+        WebElement username = driver.findElement(By.id("username"));
+        WebElement password = driver.findElement(By.id("password"));
+        WebElement loginBtn = driver.findElement(By.id("login"));
+
+        //Send text to be entered in the text fields
+        username.clear();
+        password.clear();
+        // username.sendKeys("wronguser");
+        // password.sendKeys("wrongpass");
+        loginBtn.click();
+
+        //Confirm if the error message is displayed
+        WebElement msg = wait.until(org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated(By.id("login-message")));
+        assertTrue(msg.getText().contains("Invalid credentials"));
+    }
 }
