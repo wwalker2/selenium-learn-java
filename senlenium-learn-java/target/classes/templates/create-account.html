@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Create account - Selenium Learning App</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 2rem; }
+      label, input, button { display: block; margin: 0.5rem 0; }
+      #create-message { margin-top: 1rem; font-weight: bold; }
+      .success { color: #2a7; }
+      .error { color: #d22; }
+    </style>
+  </head>
+  <body>
+    <h1>Create account</h1>
+
+    <form id="create-form">
+      <label for="username">Username</label>
+      <input id="username" name="username" type="text" placeholder="Username" />
+
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" placeholder="Password" />
+
+      <button id="create" type="submit">Create account</button>
+    </form>
+
+    <p id="create-message" aria-live="polite" style="display: none;"></p>
+
+    <p>
+      This page is intentionally minimal so you can extend it. The demo server keeps accounts in memory only.
+    </p>
+
+    <script>
+      document.getElementById('create-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var username = document.getElementById('username').value.trim();
+        var password = document.getElementById('password').value.trim();
+        var msg = document.getElementById('create-message');
+
+        msg.style.display = 'none';
+        msg.textContent = '';
+
+        fetch('/create-account', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: username, password: password })
+        })
+        .then(function (res) {
+          if (!res.ok) throw new Error('Network response was not ok');
+          return res.json();
+        })
+        .then(function (data) {
+          msg.textContent = data.message || '';
+          msg.className = data.success ? 'success' : 'error';
+          msg.style.display = 'block';
+        })
+        .catch(function (err) {
+          msg.textContent = 'Error communicating with server';
+          msg.className = 'error';
+          msg.style.display = 'block';
+        });
+      });
+    </script>
+  </body>
+  </html>
