@@ -57,4 +57,21 @@ public class SeleniumCreateAccountTest {
      private String baseUrl() {
         return "http://localhost:" + port + "/";
     }
+
+    @Test
+    void testAccountFormElementsPresent(){
+        driver.get(baseUrl() + "login");
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated(By.id("username")));
+        wait.until(org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated(By.id("password")));
+        wait.until(org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated(By.id("create")));
+
+        WebElement u = driver.findElement(By.id("username"));
+        WebElement p = driver.findElement(By.id("password"));
+        WebElement a = driver.findElement(By.id("create"));
+
+        Assertions.assertNotNull(u);
+        Assertions.assertNotNull(p);
+        Assertions.assertNotNull(a);
+    }
 }
