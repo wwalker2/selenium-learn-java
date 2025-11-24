@@ -1,7 +1,5 @@
 package com.example.seleniumlearn;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.time.Duration;
 
 import org.junit.jupiter.api.AfterEach;
