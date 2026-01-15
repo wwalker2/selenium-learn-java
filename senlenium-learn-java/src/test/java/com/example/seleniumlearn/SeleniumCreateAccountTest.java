@@ -58,7 +58,7 @@ public class SeleniumCreateAccountTest {
 
     @Test
     void testAccountFormElementsPresent(){
-        driver.get(baseUrl() + "login");
+        driver.get(baseUrl() + "create-account");
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated(By.id("username")));
         wait.until(org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated(By.id("password")));
@@ -71,5 +71,26 @@ public class SeleniumCreateAccountTest {
         Assertions.assertNotNull(u);
         Assertions.assertNotNull(p);
         Assertions.assertNotNull(a);
+    }
+
+    @Test
+    void testPasswordShortLength(){
+        driver.get(baseUrl() + "create-account");
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated(By.id("username")));
+        
+        WebElement username = driver.findElement(By.id("username"));
+        WebElement password = driver.findElement(By.id("password"));
+        WebElement createBtn = driver.findElement(By.id("create"));
+        
+        username.clear();
+        password.clear();
+
+        username.sendKeys("testuser");
+        password.sendKeys("ab");
+        createBtn.click();
+
+        WebElement msg = wait.until(org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated(By.id("create-message")));
+        Assertions.assertTrue(msg.getText().contains(null));
     }
 }
